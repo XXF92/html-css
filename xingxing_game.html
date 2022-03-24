@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>星星小游戏</title>
+    <script>
+        //window.onload=init;
+        var dingshiqi;
+        var count=0;
+        var n=0;
+        var sj;
+        //清除前一局游戏设置的定时器，从新开始设置新的定时器
+        function startGame() {
+            window.clearInterval(sj);
+            window.clearInterval(dingshiqi);
+            sj=window.setInterval("shijian()",1000);
+            dingshiqi=window.setInterval("star()",800);
+        }
+        //添加星星元素和该元素的方法
+        function star() {
+            var obj = document.createElement("img");
+            obj.src = "xingxing.gif";
+            var w = Math.floor(Math.random() * 80 + 20);
+            obj.width = w;
+            var x = Math.floor(Math.random() * 1166 + 100);
+            var y = Math.floor(Math.random() * 500 + 100);
+            obj.style.position = "absolute";
+            obj.style.top = y + "px";
+            obj.style.left = x + "px";
+            //添加点击事件
+            obj.onclick = removeStar;
+            count++;
+            var sp=document.getElementById("d3");
+            sp.style.width=count*5+"px";
+            if(count>20){
+                alert("游戏结束");
+                window.clearInterval(dingshiqi);
+                location.reload();
+            }
+            //网页添加新星星元素
+            document.body.appendChild(obj);
+            //点击删除星星
+            function removeStar() {
+                this.parentNode.removeChild(this);
+                count--;
+                var sp=document.getElementById("d3");
+                sp.style.width=count*5+"px";
+            }
+        }
+            //暂停游戏
+            function zanting(){
+                //window.clearInterval(dingshiqi);
+                alert("暂停游戏");
+            }
+        function shijian() {
+            n++;
+            var obj=document.getElementById("d1");
+            obj.innerHTML="游戏进行了"+n+"秒";
+        }
+    </script>
+    <style>
+        #d2{
+            width:100px;
+            height:20px;
+            border: 1px solid red;
+            display:inline-block;
+        }
+        #d3{
+            display:inline-block;
+            background: yellow;
+            height:20px;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" value="开始游戏" onclick="startGame()">
+    <input type="button" value="暂停游戏" onclick="zanting()">
+    <span id="d1">游戏进行了0秒</span>
+    <span id="d2"><span id="d3"></span></span>
+</body>
+</html>
