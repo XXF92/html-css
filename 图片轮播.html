@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>图片滚动</title>
+	<style type="text/css">
+		ul{
+			list-style: none;
+		}
+		img{
+			width:400px;
+		}
+		#page li{
+			float:left;
+			border:1px solid red;
+			text-align: center;
+			width:15px;
+			height: :15px;
+			margin-left: 10px;
+			cursor: pointer;
+		}
+		.hidden{
+			display: none;
+		}
+		
+	</style>
+</head>
+<body>
+
+	<ul id="pics">
+		<li class=""><img src="./images/fengjing_1.jpg"></li>
+		<li class="hidden"><img src="./images/fengjing_2.jpg"></li>
+		<li class="hidden""><img src="./images/fengjing_3.jpg"></li>
+		<li class="hidden"><img src="./images/fengjing_4.jpg"></li>
+		<li class="hidden""><img src="./images/fengjing_5.jpg"></li>
+	</ul>
+	<ul id="page">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+	</ul>
+
+	<script type="text/javascript">
+		//图片轮播
+		//点击/聚焦时切换到对应图片并暂停轮播，离开后自动从该位置开始轮播
+		let pics = document.getElementById("pics").children;
+		let pages = document.getElementById("page").children;
+		//图片轮播
+		function picList(){
+			let next_ele = null;//记录下个轮播的图片
+			for(let i= 0;i<pics.length;i++){
+				if(pics[i].className == ""){
+					if((i+1) >= pics.length){
+						next_ele = pics[0];
+						
+					}else{
+						next_ele = pics[i+1];
+					}
+				}
+			}
+			next_ele.className = "";
+
+			let siblings =getSiblings(next_ele);
+			for(let j =0;j<siblings.length;j++){
+				siblings[j].className="hidden";
+
+			}
+		}
+		//开启轮播定时器
+		let img_show = setInterval(picList,1000); 
+
+		//添加鼠标事件
+		for(let i =0;i<pages.length;i++){
+			pages[i].onmouseover = function(){
+				clearInterval(img_show);
+				pics[i].className="";
+				let siblings =getSiblings(pics[i]);
+				for(let j =0;j<siblings.length;j++){
+					siblings[j].className="hidden";
+
+				}
+			}
+			pages[i].onmouseout = function(){
+				img_show = setInterval(picList,1000); 
+			}
+
+		}
+		
+			
+
+		// 查询当前节点是父节点第几个子节点 ，从零开始
+		function getIndex(childDom){
+			let ind = 0;
+			while(childDom.previousElementSibling != null){
+				childDom = childDom.previousElementSibling;
+				ind++;
+			}
+			return ind;
+		}
+		//获取元素的其他同辈
+		function getSiblings(ele){
+			let tmp_dom = ele;
+			let siblings = [];
+			while(tmp_dom.previousElementSibling != null){
+				siblings.unshift(tmp_dom.previousElementSibling);
+				tmp_dom = tmp_dom.previousElementSibling;
+			}
+			tmp_dom = ele;
+			while(tmp_dom.nextElementSibling != null){
+				siblings.push(tmp_dom.nextElementSibling);
+				tmp_dom = tmp_dom.nextElementSibling;
+			}
+			return siblings;
+
+		}
+
+
+	</script>
+</body>
+</html>
