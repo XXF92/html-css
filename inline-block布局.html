@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>inline-block布局</title>
+	<style type="text/css">
+		#one{
+			width:100px;
+			height:100px;
+			background-color: red; 
+		}
+		#two{
+			width:150px;
+			height:100px;
+			background-color: blue; 
+		}
+		/*inline-block布局*/
+		#three{
+			width:100px;
+			height:100px;
+			background-color: red; 
+			display: inline-block;
+		}
+		#four{
+			width:150px;
+			height:100px;
+			background-color: blue; 
+			display: inline-block;
+
+		}
+
+		/*消除inline-block布局元素中间的空隙*/
+		#inblock{
+			font-size:0px;
+		}
+	</style>
+</head>
+<body>
+
+	<p>display:block</p>
+	<div>
+		<div id="one">block</div>
+		<div id="two">block</div>
+	</div>
+	
+	<p>display: inline-block; 块级元素横向排序起来</p>
+	<div>
+		<div id="three">inline-block</div>
+		<div id="four">inline-block</div>
+	</div>
+
+	<p>display: inline-block; 并且设置父元素字体大小为0来消除中间的空隙</p>
+	<div id="inblock">
+		<div id="three">inline-block</div>
+		<div id="four">inline-block</div>
+	</div>
+	
+	
+</body>
+</html>
